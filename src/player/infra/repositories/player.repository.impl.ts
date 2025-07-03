@@ -14,11 +14,13 @@ export class PlayerRepositoryImpl implements PlayerRepository {
 
   async create(player: CreatePlayerDto): Promise<Player> {
     const createdPlayer = new this.playerModel(player);
-    return createdPlayer.save();
+    return await createdPlayer.save();
   }
 
   async update(id: string, player: UpdatePlayerDto): Promise<Player | null> {
-    return this.playerModel.findByIdAndUpdate(id, player, { new: true }).exec();
+    return await this.playerModel
+      .findByIdAndUpdate(id, player, { new: true })
+      .exec();
   }
 
   async delete(id: string): Promise<void> {
@@ -26,22 +28,22 @@ export class PlayerRepositoryImpl implements PlayerRepository {
   }
 
   async findAll(): Promise<Player[]> {
-    return this.playerModel.find().exec();
+    return await this.playerModel.find().exec();
   }
 
   async findById(id: string): Promise<Player | null> {
-    return this.playerModel.findById(id).exec();
+    return await this.playerModel.findById(id).exec();
   }
 
   async findByEmail(email: string): Promise<Player | null> {
-    return this.playerModel.findOne({ email }).exec();
+    return await this.playerModel.findOne({ email }).exec();
   }
 
   async findByName(name: string): Promise<Player | null> {
-    return this.playerModel.findOne({ name }).exec();
+    return await this.playerModel.findOne({ name }).exec();
   }
 
   async findByPhoneNumber(phoneNumber: string): Promise<Player | null> {
-    return this.playerModel.findOne({ phoneNumber }).exec();
+    return await this.playerModel.findOne({ phoneNumber }).exec();
   }
 }
