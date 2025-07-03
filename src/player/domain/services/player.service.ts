@@ -47,10 +47,12 @@ export class PlayerService {
     id,
     name,
     email,
+    phoneNumber,
   }: {
     id?: string;
     name?: string;
     email?: string;
+    phoneNumber?: string;
   }): Promise<Player | null> {
     if (id) {
       return this.playerRepository.findById(id);
@@ -60,6 +62,9 @@ export class PlayerService {
     }
     if (email) {
       return this.playerRepository.findByEmail(email);
+    }
+    if (phoneNumber) {
+      return this.playerRepository.findByPhoneNumber(phoneNumber);
     }
     return null;
   }
@@ -72,17 +77,16 @@ export class PlayerService {
     }
 
     if (player.email) {
-      const playerWithSameEmail = await this.playerRepository.findByEmail(
-        player.email,
-      );
+      const playerWithSameEmail = await this.findBy({ email: player.email });
       if (playerWithSameEmail) {
         throw new BadRequestException('Email already in use');
       }
     }
 
     if (player.phoneNumber) {
-      const playerWithSamePhoneNumber =
-        await this.playerRepository.findByPhoneNumber(player.phoneNumber);
+      const playerWithSamePhoneNumber = await this.findBy({
+        phoneNumber: player.phoneNumber,
+      });
       if (playerWithSamePhoneNumber) {
         throw new BadRequestException('Phone number already in use');
       }
