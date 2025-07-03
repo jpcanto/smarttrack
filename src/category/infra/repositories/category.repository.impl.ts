@@ -4,10 +4,13 @@ import { Category } from 'src/category/domain/interfaces/category.interface';
 import { CreateCategoryDto } from 'src/category/domain/dtos/createCategory.dto';
 import { UpdateCategoryDto } from 'src/category/domain/dtos/updateCategory.dto';
 import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class CategoryRepositoryImpl implements CategoryRepository {
-  constructor(private readonly categoryModel: Model<Category>) {}
+  constructor(
+    @InjectModel('Category') private readonly categoryModel: Model<Category>,
+  ) {}
 
   async create(category: CreateCategoryDto): Promise<Category> {
     const createdCategory = new this.categoryModel(category);

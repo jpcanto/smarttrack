@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Inject,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { CategoryRepository } from '../repositories/category.repository';
@@ -11,6 +12,8 @@ import { UpdateCategoryDto } from '../dtos/updateCategory.dto';
 
 @Injectable()
 export class CategoryService {
+  private readonly logger = new Logger(CategoryService.name);
+
   constructor(
     @Inject('CategoryRepository')
     private readonly categoryRepository: CategoryRepository,
