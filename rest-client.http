@@ -1,0 +1,30 @@
+@baseUrl = http://localhost:3000
+@playerId = 6865b8210b9eca54c6b2243b
+
+### Get All players
+GET {{baseUrl}}/player
+
+### Get player by id
+GET {{baseUrl}}/player/{{playerId}}
+
+### Create player
+POST {{baseUrl}}/player
+Content-Type: application/json
+
+{
+  "name": "jogador 2",
+  "email": "novo@jogador.com",
+  "phoneNumber": "1234567890"
+}
+
+### Update player
+PUT {{baseUrl}}/player/{{playerId}}
+Content-Type: application/json
+
+{
+  "name": "Novo Nome do Jogador 32",
+  "email": "novo@jogador.com"
+}
+
+### Delete player
+DELETE {{baseUrl}}/player/{{playerId}}
