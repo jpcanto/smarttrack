@@ -50,4 +50,17 @@ export class CategoryRepositoryImpl implements CategoryRepository {
       $push: { players: playerId },
     });
   }
+
+  async isPlayerInCategory(
+    categoryId: string,
+    playerId: string,
+  ): Promise<boolean> {
+    const category = await this.categoryModel
+      .findOne({
+        _id: categoryId,
+        players: playerId,
+      })
+      .exec();
+    return !!category;
+  }
 }

@@ -91,10 +91,10 @@ export class CategoryService {
       throw new NotFoundException('Player not found');
     }
 
-    const { players } = categoryFound;
-    const playersIds = players.map(player => player._id.toString());
+    const playerAlreadyInCategory =
+      await this.categoryRepository.isPlayerInCategory(id, playerId);
 
-    if (playersIds.includes(playerId)) {
+    if (playerAlreadyInCategory) {
       throw new BadRequestException('Player already in that category');
     }
 
