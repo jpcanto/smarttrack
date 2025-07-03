@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
 @playerId = 6865b8210b9eca54c6b2243b
-@categoryId = 6865b8210b9eca54c6b2243b
+@categoryId = 6865f49083aa8aab5fd79559
 
 ### Get All players
 GET {{baseUrl}}/player
@@ -61,4 +61,16 @@ Content-Type: application/json
 PUT {{baseUrl}}/category/{{categoryId}}
 Content-Type: application/json
 
-{}
+{
+  "description": "Descrição da categoria 2",
+  "events": [
+    {
+      "name": "Evento 2",
+      "operation": "ADD",
+      "value": 10
+    }
+  ]
+}
+
+### Add player to category
+POST {{baseUrl}}/category/{{categoryId}}/player/{{playerId}}

@@ -8,4 +8,6 @@ export interface Player extends Document {
   ranking: string;
   rankingPosition: number;
   imageUrl: string;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
 }

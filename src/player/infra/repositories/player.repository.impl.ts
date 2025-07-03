@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreatePlayerDto } from 'src/player/domain/dtos/createPlayer.dto';
-import { UpdatePlayerDto } from 'src/player/domain/dtos/updatePlayer.dto';
+import { CreatePlayerDTO } from 'src/player/domain/dtos/createPlayer.dto';
+import { UpdatePlayerDTO } from 'src/player/domain/dtos/updatePlayer.dto';
 import { Player } from 'src/player/domain/interfaces/player.interface';
 import { PlayerRepository } from 'src/player/domain/repositories/player.repository';
 
@@ -12,12 +12,12 @@ export class PlayerRepositoryImpl implements PlayerRepository {
     @InjectModel('Player') private readonly playerModel: Model<Player>,
   ) {}
 
-  async create(player: CreatePlayerDto): Promise<Player> {
+  async create(player: CreatePlayerDTO): Promise<Player> {
     const createdPlayer = new this.playerModel(player);
     return await createdPlayer.save();
   }
 
-  async update(id: string, player: UpdatePlayerDto): Promise<Player | null> {
+  async update(id: string, player: UpdatePlayerDTO): Promise<Player | null> {
     return await this.playerModel
       .findByIdAndUpdate(id, player, { new: true })
       .exec();

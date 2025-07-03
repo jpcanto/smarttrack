@@ -5,10 +5,10 @@ import {
   Inject,
   BadRequestException,
 } from '@nestjs/common';
-import { CreatePlayerDto } from '../dtos/createPlayer.dto';
+import { CreatePlayerDTO } from '../dtos/createPlayer.dto';
 import { Player } from '../interfaces/player.interface';
 import { PlayerRepository } from '../repositories/player.repository';
-import { UpdatePlayerDto } from '../dtos/updatePlayer.dto';
+import { UpdatePlayerDTO } from '../dtos/updatePlayer.dto';
 
 @Injectable()
 export class PlayerService {
@@ -19,7 +19,7 @@ export class PlayerService {
     private readonly playerRepository: PlayerRepository,
   ) {}
 
-  async create(player: CreatePlayerDto): Promise<Player> {
+  async create(player: CreatePlayerDTO): Promise<Player> {
     const { email, phoneNumber, name } = player;
 
     if (await this.playerRepository.findByName(name)) {
@@ -69,7 +69,7 @@ export class PlayerService {
     return null;
   }
 
-  async update(id: string, player: UpdatePlayerDto): Promise<Player | null> {
+  async update(id: string, player: UpdatePlayerDTO): Promise<Player | null> {
     const playerFound = await this.playerRepository.findById(id);
 
     if (!playerFound) {

@@ -6,9 +6,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CategoryRepository } from '../repositories/category.repository';
-import { CreateCategoryDto } from '../dtos/createCategory.dto';
+import { CreateCategoryDTO } from '../dtos/createCategory.dto';
 import { Category } from '../interfaces/category.interface';
-import { UpdateCategoryDto } from '../dtos/updateCategory.dto';
+import { UpdateCategoryDTO } from '../dtos/updateCategory.dto';
 
 @Injectable()
 export class CategoryService {
@@ -19,7 +19,7 @@ export class CategoryService {
     private readonly categoryRepository: CategoryRepository,
   ) {}
 
-  async create(category: CreateCategoryDto): Promise<Category> {
+  async create(category: CreateCategoryDTO): Promise<Category> {
     const { name } = category;
 
     const categoryExists = await this.findBy({ name });
@@ -55,7 +55,7 @@ export class CategoryService {
 
   async update(
     id: string,
-    category: UpdateCategoryDto,
+    category: UpdateCategoryDTO,
   ): Promise<Category | null> {
     const categoryFound = await this.findBy({ id });
 
@@ -74,5 +74,15 @@ export class CategoryService {
     }
 
     return await this.categoryRepository.delete(id);
+  }
+
+  async addPlayerToCategory(id: string, playerId: string): Promise<void> {
+    const categoryFound = await this.findBy({ id });
+
+    if (!categoryFound) {
+      throw new NotFoundException('Category not found');
+    }
+
+    return await this.categoryRepository.updateCategoryPlayers(id, playerId);
   }
 }

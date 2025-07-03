@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { Event } from '../interfaces/category.interface';
 
-export class CreateCategoryDto {
+export class CreateCategoryDTO {
   @IsString()
   @IsNotEmpty()
   readonly name: string;

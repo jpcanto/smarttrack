@@ -9,10 +9,10 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateCategoryDto } from 'src/category/domain/dtos/createCategory.dto';
+import { CreateCategoryDTO } from 'src/category/domain/dtos/createCategory.dto';
 import { Category } from 'src/category/domain/interfaces/category.interface';
 import { CategoryService } from 'src/category/domain/services/category.service';
-import { UpdateCategoryDto } from 'src/category/domain/dtos/updateCategory.dto';
+import { UpdateCategoryDTO } from 'src/category/domain/dtos/updateCategory.dto';
 
 @Controller('category')
 export class CategoryController {
@@ -20,7 +20,7 @@ export class CategoryController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async create(@Body() category: CreateCategoryDto): Promise<Category> {
+  async create(@Body() category: CreateCategoryDTO): Promise<Category> {
     return await this.categoryService.create(category);
   }
 
@@ -34,11 +34,19 @@ export class CategoryController {
     return await this.categoryService.findBy({ id });
   }
 
+  @Post(':id/player/:playerId')
+  async addPlayerToCategory(
+    @Param('id') id: string,
+    @Param('playerId') playerId: string,
+  ): Promise<void> {
+    return await this.categoryService.addPlayerToCategory(id, playerId);
+  }
+
   @Put(':id')
   @UsePipes(ValidationPipe)
   async update(
     @Param('id') id: string,
-    @Body() category: UpdateCategoryDto,
+    @Body() category: UpdateCategoryDTO,
   ): Promise<Category | null> {
     return await this.categoryService.update(id, category);
   }
