@@ -9,6 +9,7 @@ import { CategoryRepository } from '../repositories/category.repository';
 import { CreateCategoryDTO } from '../dtos/createCategory.dto';
 import { Category } from '../interfaces/category.interface';
 import { UpdateCategoryDTO } from '../dtos/updateCategory.dto';
+import { PlayerService } from 'src/player/domain/services/player.service';
 
 @Injectable()
 export class CategoryService {
@@ -17,6 +18,7 @@ export class CategoryService {
   constructor(
     @Inject('CategoryRepository')
     private readonly categoryRepository: CategoryRepository,
+    private readonly playerService: PlayerService,
   ) {}
 
   async create(category: CreateCategoryDTO): Promise<Category> {
@@ -81,6 +83,19 @@ export class CategoryService {
 
     if (!categoryFound) {
       throw new NotFoundException('Category not found');
+    }
+
+    const playerFound = await this.playerService.findBy({ id: playerId });
+
+    if (!playerFound) {
+      throw new NotFoundException('Player not found');
+    }
+
+    const { players } = categoryFound;
+    const playersIds = players.map(player => player._id.toString());
+
+    if (playersIds.includes(playerId)) {
+      throw new BadRequestException('Player already in that category');
     }
 
     return await this.categoryRepository.updateCategoryPlayers(id, playerId);
