@@ -63,15 +63,6 @@ export class CategoryService {
       throw new NotFoundException('Category not found');
     }
 
-    if (category.name) {
-      const categoryWithSameName = await this.findBy({ name: category.name });
-      if (categoryWithSameName) {
-        throw new BadRequestException(
-          'A category with this name already exists',
-        );
-      }
-    }
-
     return await this.categoryRepository.update(id, category);
   }
 

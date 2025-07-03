@@ -1,11 +1,8 @@
 import { IsArray, IsOptional, IsString } from 'class-validator';
 import { Player } from 'src/player/domain/interfaces/player.interface';
+import { Event } from '../interfaces/category.interface';
 
 export class UpdateCategoryDto {
-  @IsString()
-  @IsOptional()
-  readonly name: string;
-
   @IsString()
   @IsOptional()
   readonly description: string;
