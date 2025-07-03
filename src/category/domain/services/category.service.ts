@@ -95,7 +95,9 @@ export class CategoryService {
       await this.categoryRepository.isPlayerInCategory(id, playerId);
 
     if (playerAlreadyInCategory) {
-      throw new BadRequestException('Player already in that category');
+      throw new BadRequestException(
+        `Player: ${playerFound.name} already in category: ${categoryFound.name}`,
+      );
     }
 
     return await this.categoryRepository.updateCategoryPlayers(id, playerId);
